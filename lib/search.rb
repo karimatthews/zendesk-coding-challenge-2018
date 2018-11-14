@@ -7,6 +7,7 @@ require_relative 'resource.rb'
 require_relative 'ticket.rb'
 require_relative 'user.rb'
 require_relative 'organization.rb'
+require_relative 'user_input.rb'
 
 class Search
 
@@ -14,77 +15,65 @@ class Search
   USERS = 'Users'
   ORGANIZATIONS = 'Organizations'
 
-  def initialize(tickets_path, users_path, organizations_path)
-    puts 'Welcome to Zendesk Search.'
+  attr_reader :user_input, :tickets_path, :users_path, :organizations_path
 
-    @tickets = parse_json(tickets_path)
-    @users = parse_json(users_path)
-    @organizations = parse_json(organizations_path)
-
-    puts "\nSearch for: \n\n#{TICKETS} \n#{USERS} \n#{ORGANIZATIONS}"
-    @resource_type = input_resource_type
-
-    @data_field = input_data_field
-    @search_term = input_search_term
-
-    puts "\nSearching for #{@resource_type} with #{@data_field} \"#{@search_term}\".\n\n"
+  def initialize(tickets_path: '', users_path: '', organizations_path: '', user_input: nil)
+    @tickets_path = tickets_path
+    @users_path = users_path
+    @organizations_path = organizations_path
+    @user_input = user_input
   end
 
   def results
-    raw_results = dataset.select { |data| data[@data_field.downcase] == @search_term }
+    puts "\nSearching for #{user_input.resource_type} with "\
+    "#{user_input.data_field} \"#{user_input.search_term}\".\n\n"
 
-    formatted_results = raw_results.map do |raw_result|
-      get_class(@resource_type).new(raw_result).readable_format
+    puts raw_results.empty? ? 'Sorry, your search has return no results.' : formatted_results
+
+    # Return the raw object (primariy for testing purposes)
+    raw_results
+  end
+
+  def formatted_results
+    raw_results.map do |raw_result|
+      resource_class.new(raw_result).readable_format
     end
+  end
 
-    puts formatted_results
+  def raw_results
+    @raw_results ||= dataset.select do |data|
+      data[user_input.data_field.downcase] == user_input.search_term
+    end
   end
 
   private
 
+    def tickets
+      @tickets ||= parse_json(tickets_path)
+    end
+
+    def users
+      @users ||= parse_json(users_path)
+    end
+
+    def organizations
+      @organizations ||= parse_json(organizations_path)
+    end
+
     def dataset
-    # TODO: Clean this up
-      case @resource_type
+      # TODO: Clean this up
+      case user_input.resource_type
       when TICKETS
-        @tickets
+        tickets
       when USERS
-        @users
+        users
       when ORGANIZATIONS
-        @organizations
+        organizations
       end
     end
 
-    def input_resource_type
-      input = gets.chomp
-      valid_input = %w[tickets users organizations].include?(input.downcase)
-
-      unless valid_input
-        puts "\nInvalid Input. Enter Tickets, Users, or Organizations.\n"
-        # If the input is invalid get the user to try again.
-        input_resource_type
-      end
-
-      input.capitalize
-    end
-
-    def input_data_field
-      puts "\nSelect a field from: #{field_options.join(', ')}."
-      gets.chomp
-
-      # TODO: validate input and make easier to select an option
-    end
-
-    def field_options
-      get_class(@resource_type).fields
-    end
-
-    def get_class(_classname)
-      Object.const_get(@resource_type.chop.capitalize)
-    end
-
-    def input_search_term
-      puts 'Add your search term:'
-      gets.chomp
+    def resource_class
+      Object.const_get(user_input.resource_type.chop.capitalize)
     end
 
     def parse_json(file_path)

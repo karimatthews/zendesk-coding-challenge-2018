@@ -7,4 +7,14 @@ tickets_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/tickets.
 users_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/users.json'
 organizations_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/organizations.json'
 
-Search.new(tickets_path, users_path, organizations_path).results
+puts 'Welcome to Zendesk Search.'
+
+input = UserInput.new
+
+Search.new(
+  tickets_path: tickets_path,
+  users_path: users_path,
+  organizations_path: organizations_path,
+  user_input: input
+)
+      .results
