@@ -1,0 +1,17 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
+Metrics/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled:
+
+Layout/IndentationConsistency:
+  EnforcedStyle: rails
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
