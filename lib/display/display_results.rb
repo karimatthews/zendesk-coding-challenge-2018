@@ -9,7 +9,7 @@ class DisplayResults
 
   def display(raw_results, resource_class)
     if raw_results.empty?
-      puts 'Sorry, your search has return no results.'
+      puts 'Sorry, your search has returned no results.'
     else
       puts formatted_results(raw_results, resource_class)
     end
