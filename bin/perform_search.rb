@@ -10,21 +10,16 @@ organizations_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/or
 
 puts 'Welcome to Zendesk Search.'
 
-input = UserInput.new
-
-input_hash = {
-  resource_type: input.resource_type,
-  data_field: input.data_field,
-  search_term: input.search_term
-}
+# Will return e.g. {resource_type: 'tickets', data_field: 'type', search_term: 'incident'}
+input = UserInput.new.input_values
 
 results = Search.new(
   tickets_path: tickets_path,
   users_path: users_path,
   organizations_path: organizations_path,
-  user_input: input_hash
+  user_input: input
 ).results
 
-resource_class = Object.const_get(input_hash[:resource_type].chop.capitalize)
+resource_class = Object.const_get(input[:resource_type].chop.capitalize)
 
 DisplayResults.new.display(results, resource_class)
