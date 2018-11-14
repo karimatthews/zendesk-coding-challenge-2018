@@ -8,6 +8,6 @@ ruby '2.5.3'
 
 group :development do
   gem 'pry'
-  gem 'pry_debug'
+  gem 'pry-byebug'
   gem 'rubocop', '~> 0.60.0'
 end
