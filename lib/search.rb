@@ -2,6 +2,7 @@
 
 require 'json'
 require 'pry'
+require 'pry-byebug'
 
 require_relative 'resource.rb'
 require_relative 'ticket.rb'
@@ -17,7 +18,7 @@ class Search
 
   attr_reader :user_input, :tickets_path, :users_path, :organizations_path
 
-  def initialize(tickets_path: '', users_path: '', organizations_path: '', user_input: nil)
+  def initialize(tickets_path: '', users_path: '', organizations_path: '', user_input: {})
     @tickets_path = tickets_path
     @users_path = users_path
     @organizations_path = organizations_path
@@ -25,24 +26,15 @@ class Search
   end
 
   def results
-    puts "\nSearching for #{user_input.resource_type} with "\
-    "#{user_input.data_field} \"#{user_input.search_term}\".\n\n"
+    puts "\nSearching for #{user_input[:resource_type]} with "\
+    "#{user_input[:data_field]} \"#{user_input[:search_term]}\".\n\n"
 
-    puts raw_results.empty? ? 'Sorry, your search has return no results.' : formatted_results
-
-    # Return the raw object (primariy for testing purposes)
     raw_results
-  end
-
-  def formatted_results
-    raw_results.map do |raw_result|
-      resource_class.new(raw_result).readable_format
-    end
   end
 
   def raw_results
     @raw_results ||= dataset.select do |data|
-      data[user_input.data_field.downcase] == user_input.search_term
+      data[user_input[:data_field].downcase] == user_input[:search_term]
     end
   end
 
@@ -62,7 +54,8 @@ class Search
 
     def dataset
       # TODO: Clean this up
-      case user_input.resource_type
+
+      case user_input[:resource_type].capitalize
       when TICKETS
         tickets
       when USERS
@@ -70,10 +63,6 @@ class Search
       when ORGANIZATIONS
         organizations
       end
-    end
-
-    def resource_class
-      Object.const_get(user_input.resource_type.chop.capitalize)
     end
 
     def parse_json(file_path)
