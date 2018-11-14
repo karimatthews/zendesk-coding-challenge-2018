@@ -2,7 +2,7 @@
 
 require_relative './test_helper.rb'
 
-class TestSearch < Minitest::Test
+class SearchTests < Minitest::Test
 
   def setup
     user_input_hash = { resource_type: 'tickets', data_field: 'type', search_term: 'incident' }

@@ -2,7 +2,7 @@
 
 require_relative './test_helper.rb'
 
-class UserInputSearch < Minitest::Test
+class UserInputTest < Minitest::Test
 
   def setup
     @user_input = UserInput.new
