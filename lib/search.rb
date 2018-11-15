@@ -4,7 +4,6 @@ require 'json'
 require 'pry'
 require 'pry-byebug'
 
-require_relative 'resource.rb'
 require_relative 'ticket.rb'
 require_relative 'user.rb'
 require_relative 'organization.rb'
@@ -33,12 +32,35 @@ class Search
   end
 
   def raw_results
-    @raw_results ||= dataset.select do |data|
+    results = dataset.select do |data|
       data[user_input[:data_field].downcase] == user_input[:search_term]
+    end
+
+    results.map do |result|
+      result_with_associated_data(result)
     end
   end
 
   private
+
+    def result_with_associated_data(result)
+      case user_input[:resource_type].capitalize
+      when TICKETS
+        associated_ticket_data(result)
+      when USERS
+        associated_user_data(result)
+      when ORGANIZATIONS
+        associated_organization_data(result)
+      end
+    end
+
+    def associated_ticket_data(ticket)
+      ticket['submitter'] = users.find { |u| u['_id'] == ticket['submitter_id'] }
+      ticket['assignee'] = users.find { |u| u['_id'] == ticket['assignee_id'] }
+      ticket['organization'] = organizations.find { |u| u['_id'] == ticket['organization_id'] }
+
+      ticket
+    end
 
     def tickets
       @tickets ||= parse_json(tickets_path)
@@ -68,6 +90,15 @@ class Search
     def parse_json(file_path)
       file = File.read(file_path)
       JSON.parse(file)
+    end
+
+    def index_data(data)
+      hash = {}
+      data.each do |entry|
+        id = entry['_id']
+        hash[id] = entry
+      end
+      hash
     end
 
 end
