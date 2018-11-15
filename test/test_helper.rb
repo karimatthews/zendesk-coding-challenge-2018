@@ -9,3 +9,8 @@ require_relative '../lib/user_input.rb'
 
 def puts(*args)
 end
+
+def json_fixture(file_path)
+  file = File.read(file_path)
+  JSON.parse(file)
+end
