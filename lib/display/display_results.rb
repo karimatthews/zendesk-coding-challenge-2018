@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../resource.rb'
 require_relative '../ticket.rb'
 require_relative '../user.rb'
 require_relative '../organization.rb'

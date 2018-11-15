@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class User < Resource
+class User
 
   def self.fields
     %w[name alias active verified email phone signature suspended role]

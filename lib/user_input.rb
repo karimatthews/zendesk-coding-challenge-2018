@@ -3,7 +3,6 @@
 require 'json'
 require 'pry'
 
-require_relative 'resource.rb'
 require_relative 'ticket.rb'
 require_relative 'user.rb'
 require_relative 'organization.rb'

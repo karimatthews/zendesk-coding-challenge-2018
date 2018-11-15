@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Ticket < Resource
+class Ticket
 
   def self.fields
     %w[type subject description priority status]

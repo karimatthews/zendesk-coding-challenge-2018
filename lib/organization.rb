@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Organization < Resource
+class Organization
 
   def self.fields
     %w[name details]
