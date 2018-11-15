@@ -33,8 +33,19 @@ class SearchTests < Minitest::Test
     assert_equal 0, results.size
   end
 
-  def test_can_search_for_empty_field
-    skip
+  def test_can_handle_empty_field
+    user_input = { resource_type: 'users', data_field: 'alias', search_term: nil }
+
+    new_search = Search.new(
+      tickets_path: 'test/fixtures/json/tickets_fixture.json',
+      users_path: 'test/fixtures/json/users_fixture.json',
+      organizations_path: 'test/fixtures/json/organizations_fixture.json',
+      user_input: user_input
+    )
+
+    results = new_search.results
+
+    assert_equal 'Cross Barlow', results.first['name']
   end
 
   def test_search_for_tickets_returns_user_data

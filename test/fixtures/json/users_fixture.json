@@ -30,7 +30,6 @@
     "url": "http://initech.zendesk.com/api/v2/users/2.json",
     "external_id": "c9995ea4-ff72-46e0-ab77-dfe0ae1ef6c2",
     "name": "Cross Barlow",
-    "alias": "Miss Joni",
     "created_at": "2016-06-23T10:31:39 -10:00",
     "active": true,
     "verified": true,

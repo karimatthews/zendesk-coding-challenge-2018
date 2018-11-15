@@ -37,7 +37,9 @@ class UserInput
   def receive_input(input_type, options)
     input = gets.chomp
 
-    return input if input_type == 'search_term'
+    if input_type == 'search_term'
+      return input.empty? ? nil : input
+    end
 
     # We want to allow for the search term to be empty
     validate_input(input, input_type, options) unless input_type == 'search_term'

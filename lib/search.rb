@@ -25,10 +25,19 @@ class Search
   end
 
   def results
-    puts "\nSearching for #{user_input[:resource_type]} with "\
-    "#{user_input[:data_field]} \"#{user_input[:search_term]}\".\n\n"
+    puts search_message
 
     raw_results
+  end
+
+  def search_message
+    if user_input[:search_term]
+      "\nSearching for #{user_input[:resource_type].capitalize} with "\
+      "#{user_input[:data_field].capitalize} \"#{user_input[:search_term]}\".\n\n"
+    else
+      "\nSearching for #{user_input[:resource_type].capitalize} with no "\
+      "#{user_input[:data_field].capitalize}.\n\n"
+    end
   end
 
   def raw_results
