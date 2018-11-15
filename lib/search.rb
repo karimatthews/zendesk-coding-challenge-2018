@@ -55,11 +55,26 @@ class Search
     end
 
     def associated_ticket_data(ticket)
-      ticket['submitter'] = users.find { |u| u['_id'] == ticket['submitter_id'] }
-      ticket['assignee'] = users.find { |u| u['_id'] == ticket['assignee_id'] }
-      ticket['organization'] = organizations.find { |u| u['_id'] == ticket['organization_id'] }
-
+      ticket['submitter'] = find_user_by_id(ticket['submitter_id'])
+      ticket['assignee'] = find_user_by_id(ticket['assignee_id'])
+      ticket['organization'] = find_organization_by_id(ticket['organization_id'])
       ticket
+    end
+
+    def associated_user_data(user)
+      user['organization'] = find_organization_by_id(user['organization_id'])
+
+      user['assigned_tickets'] = tickets.select { |t| t['assignee_id'] == user['_id'] }
+      user['submitted_tickets'] = tickets.select { |t| t['submitter_id'] == user['_id'] }
+      user
+    end
+
+    def find_user_by_id(user_id)
+      users.find { |u| u['_id'] == user_id }
+    end
+
+    def find_organization_by_id(org_id)
+      organizations.find { |o| o['_id'] == org_id }
     end
 
     def tickets
