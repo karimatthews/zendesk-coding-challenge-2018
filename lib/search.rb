@@ -105,16 +105,7 @@ class Search
     end
 
     def dataset
-      # TODO: Clean this up
-
-      case user_input[:resource_type].capitalize
-      when TICKETS
-        tickets
-      when USERS
-        users
-      when ORGANIZATIONS
-        organizations
-      end
+      self.send(user_input[:resource_type].downcase)
     end
 
     def parse_json(file_path)
