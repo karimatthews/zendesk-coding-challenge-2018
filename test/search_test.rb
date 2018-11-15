@@ -26,7 +26,7 @@ class SearchTests < Minitest::Test
   end
 
   def test_no_results_are_returned_when_search_term_does_not_match
-    @search.user_input[:search_term] = 'nonsense'
+    @search.search_term = 'nonsense'
 
     results = @search.results
 
@@ -34,18 +34,23 @@ class SearchTests < Minitest::Test
   end
 
   def test_can_handle_empty_field
-    user_input = { resource_type: 'users', data_field: 'alias', search_term: nil }
+    @search.search_term = nil
+    @search.resource = 'users'
+    @search.field = 'alias'
 
-    new_search = Search.new(
-      tickets_path: 'test/fixtures/json/tickets_fixture.json',
-      users_path: 'test/fixtures/json/users_fixture.json',
-      organizations_path: 'test/fixtures/json/organizations_fixture.json',
-      user_input: user_input
-    )
-
-    results = new_search.results
+    results = @search.results
 
     assert_equal 'Cross Barlow', results.first['name']
+  end
+
+  def test_can_search_by_tags
+    @search.field = 'tags'
+    @search.search_term = 'ohio'
+
+    results = @search.results
+
+    assert_equal 'A Catastrophe in Korea (North)', results.first['subject']
+    assert_equal 1, results.size
   end
 
   def test_search_for_tickets_returns_user_data

@@ -20,7 +20,7 @@ class TicketTest < Minitest::Test
   def test_fields
     fields = Ticket.fields
 
-    assert_equal %w[subject type description priority status], fields
+    assert_equal %w[subject type description priority status _id external_id tags has_incidents via], fields
   end
 
   def test_tickets_can_be_presented_in_a_readable_format

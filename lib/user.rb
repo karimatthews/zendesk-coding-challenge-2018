@@ -12,7 +12,7 @@ class User
   end
 
   def self.fields
-    %w[name alias active verified email phone signature suspended role]
+    %w[name alias active verified email phone signature suspended role tags]
   end
 
   def readable_format

@@ -11,7 +11,7 @@ class Organization
   end
 
   def self.fields
-    %w[name details]
+    %w[name details tags]
   end
 
   def readable_format

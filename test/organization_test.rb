@@ -19,7 +19,7 @@ class OrganizationTest < Minitest::Test
   def test_fields
     fields = Organization.fields
 
-    assert_equal %w[name details], fields
+    assert_equal %w[name details tags], fields
   end
 
   def test_organizations_can_be_presented_in_a_readable_format

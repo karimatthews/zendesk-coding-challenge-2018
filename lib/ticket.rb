@@ -12,7 +12,7 @@ class Ticket
   end
 
   def self.fields
-    %w[subject type description priority status]
+    %w[subject type description priority status _id external_id tags has_incidents via]
   end
 
   def readable_format
@@ -28,8 +28,6 @@ class Ticket
       organization ? "Organization: #{organization['name']}" : nil
     ].compact
 
-    # Submitted by: Kari Matthews
-    # Assigned to: Another Person
     # Priority: High
     # Status:
     # Description: akjdsfh akdjsfh sdh

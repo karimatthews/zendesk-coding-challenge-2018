@@ -15,45 +15,55 @@ class Search
   USERS = 'Users'
   ORGANIZATIONS = 'Organizations'
 
-  attr_reader :user_input, :tickets_path, :users_path, :organizations_path
+  attr_accessor :tickets_path, :users_path, :organizations_path, :resource, :field, :search_term
 
   def initialize(tickets_path: '', users_path: '', organizations_path: '', user_input: {})
     @tickets_path = tickets_path
     @users_path = users_path
     @organizations_path = organizations_path
-    @user_input = user_input
+
+    @resource = user_input[:resource_type]
+    @field = user_input[:data_field]
+    @search_term = user_input[:search_term]
   end
 
   def results
     puts search_message
-
     raw_results
   end
 
-  def search_message
-    if user_input[:search_term]
-      "\nSearching for #{user_input[:resource_type].capitalize} with "\
-      "#{user_input[:data_field].capitalize} \"#{user_input[:search_term]}\".\n\n"
-    else
-      "\nSearching for #{user_input[:resource_type].capitalize} with no "\
-      "#{user_input[:data_field].capitalize}.\n\n"
-    end
-  end
-
   def raw_results
-    results = dataset.select do |data|
-      data[user_input[:data_field].downcase] == user_input[:search_term]
-    end
-
-    results.map do |result|
+    results_without_associated_data.map do |result|
       result_with_associated_data(result)
     end
   end
 
   private
 
+    def results_without_associated_data
+      dataset.select do |data|
+        check_if_data_matches_query(data)
+      end
+    end
+
+    def check_if_data_matches_query(data)
+      if field == 'tags'
+        data['tags'].map(&:downcase).include?(search_term)
+      else
+        data[field.downcase] == search_term
+      end
+    end
+
+    def search_message
+      if search_term
+        "\nSearching for #{resource.capitalize} with #{field.capitalize} \"#{search_term}\".\n\n"
+      else
+        "\nSearching for #{resource.capitalize} with no #{field.capitalize}.\n\n"
+      end
+    end
+
     def result_with_associated_data(result)
-      case user_input[:resource_type].capitalize
+      case resource.capitalize
       when TICKETS
         associated_ticket_data(result)
       when USERS
@@ -105,7 +115,7 @@ class Search
     end
 
     def dataset
-      self.send(user_input[:resource_type].downcase)
+      send(resource)
     end
 
     def parse_json(file_path)

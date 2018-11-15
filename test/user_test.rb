@@ -20,7 +20,7 @@ class UserTest < Minitest::Test
   def test_fields
     fields = User.fields
 
-    assert_equal %w[name alias active verified email phone signature suspended role], fields
+    assert_equal %w[name alias active verified email phone signature suspended role tags], fields
   end
 
   def test_users_can_be_presented_in_a_readable_format
