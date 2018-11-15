@@ -17,7 +17,7 @@ class OrganizationTest < Minitest::Test
   end
 
   def test_fields
-    fields = organization.fields
+    fields = Organization.fields
 
     assert_equal %w[name details], fields
   end
@@ -32,13 +32,12 @@ class OrganizationTest < Minitest::Test
 
     def expected_organization_data
       "Enthaze\n"\
-      "MegaCorp\n"\
       "Users:\n"\
       "  - Francisca Rasmussen\n"\
       "  - Cross Barlow\n"\
       "Tickets:\n"\
-      "  - A Catastrophe in Korea (North)\n"\
-      "  - A Catastrophe in Micronesia\n\n"
+      "  - A Catastrophe in Korea (North) | Status: pending\n"\
+      "  - A Catastrophe in Micronesia | Status: hold\n\n"
     end
 
 end

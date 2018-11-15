@@ -69,6 +69,12 @@ class Search
       user
     end
 
+    def associated_organization_data(organization)
+      organization['users'] = users.select { |u| u['organization_id'] == organization['_id'] }
+      organization['tickets'] = tickets.select { |t| t['organization_id'] == organization['_id'] }
+      organization
+    end
+
     def find_user_by_id(user_id)
       users.find { |u| u['_id'] == user_id }
     end

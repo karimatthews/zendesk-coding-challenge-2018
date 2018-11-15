@@ -11,7 +11,7 @@
     "status": "pending",
     "submitter_id": 1,
     "assignee_id": 1,
-    "organization_id": 116,
+    "organization_id": 101,
     "tags": [
       "Ohio",
       "Pennsylvania",
@@ -34,7 +34,7 @@
     "status": "hold",
     "submitter_id": 71,
     "assignee_id": 38,
-    "organization_id": 112,
+    "organization_id": 101,
     "tags": [
       "Puerto Rico",
       "Idaho",

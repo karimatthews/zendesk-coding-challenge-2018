@@ -2,17 +2,46 @@
 
 class Organization
 
+  attr_reader :data, :users, :tickets
+
+  def initialize(data)
+    @data = data
+    @users = data['users']
+    @tickets = data['tickets']
+  end
+
   def self.fields
     %w[name details]
   end
 
   def readable_format
-    @data
-    # e.g.
-    # Shopify
-    # https://shopify.com
-    # Tags: tag one, tag two
-    # Tickets: ticket one, ticket two
+    organization_data.join("\n") + "\n\n"
   end
+
+  def organization_data
+    [
+      data['name'],
+      users ? users_string : nil,
+      tickets ? tickets_string : nil
+    ].compact
+  end
+
+  private
+
+    def users_string
+      user_names = users.map do |user|
+        '  - ' + user['name']
+      end
+
+      "Users:\n" + user_names.join("\n")
+    end
+
+    def tickets_string
+      org_tickets = tickets.map do |ticket|
+        '  - ' + ticket['subject'] + ' | Status: ' + ticket['status']
+      end
+
+      "Tickets:\n" + org_tickets.join("\n")
+    end
 
 end
