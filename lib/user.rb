@@ -87,7 +87,7 @@ class User
 
     def tickets_string(tickets, type)
       formatted_tickets = tickets.map do |ticket|
-        '  - ' + ticket['subject'] + ' | Status: ' + ticket['status']
+        '  - ' + ticket['subject'] + ' | Id: ' + ticket['_id']
       end
 
       type.capitalize + " Tickets:\n" + formatted_tickets.join("\n")

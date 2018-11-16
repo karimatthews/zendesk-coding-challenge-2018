@@ -61,11 +61,11 @@ class UserTest < Minitest::Test
       "Created At: Friday, 15 Apr 2016  5:19 AM\n"\
       "Last Login At: Sunday, 04 Aug 2013  1:03 AM\n"\
       "Assigned Tickets:\n"\
-      "  - A Catastrophe in Korea (North) | Status: pending\n"\
-      "  - A Catastrophe in Micronesia | Status: hold\n"\
+      "  - A Catastrophe in Korea (North) | Id: 436bf9b0-1147-4c0a-8439-6f79833bff5b\n"\
+      "  - A Catastrophe in Micronesia | Id: 1a227508-9f39-427c-8f57-1b72f3fab87c\n"\
       "Submitted Tickets:\n"\
-      "  - A Catastrophe in Korea (North) | Status: pending\n"\
-      "  - A Catastrophe in Micronesia | Status: hold\n\n"\
+      "  - A Catastrophe in Korea (North) | Id: 436bf9b0-1147-4c0a-8439-6f79833bff5b\n"\
+      "  - A Catastrophe in Micronesia | Id: 1a227508-9f39-427c-8f57-1b72f3fab87c\n\n"\
     end
 
 end

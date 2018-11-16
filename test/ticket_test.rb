@@ -47,9 +47,9 @@ class TicketTest < Minitest::Test
     end
 
     def associated_data
-      "Submitted by: Francisca Rasmussen\n"\
-      "Assigned to: Francisca Rasmussen\n"\
-      "Organization: Enthaze\n"\
+      "Submitted by: Francisca Rasmussen | Id: 1\n"\
+      "Assigned to: Francisca Rasmussen | Id: 1\n"\
+      "Organization: Enthaze | Id: 101\n"\
     end
 
     def extra_data

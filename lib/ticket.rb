@@ -24,7 +24,7 @@ class Ticket
   end
 
   def ticket_data
-    (basic_ticket_data + associated_ticket_data + extra_ticket_data).compact
+    (basic_ticket_data + extra_ticket_data).compact
   end
 
   private
@@ -35,16 +35,23 @@ class Ticket
         "Id: #{data['_id']}",
         "Status: #{data['status']}",
         "Priority: #{data['priority']}",
-        "Description: #{data['description']}"
+        "Description: #{data['description']}",
+        submitter_text,
+        assignee_text,
+        organization_text
       ]
     end
 
-    def associated_ticket_data
-      [
-        submitter ? "Submitted by: #{submitter['name']}" : nil,
-        assignee ? "Assigned to: #{assignee['name']}" : nil,
-        organization ? "Organization: #{organization['name']}" : nil
-      ]
+    def submitter_text
+      submitter ? "Submitted by: #{submitter['name']} | Id: #{submitter['_id']}" : nil
+    end
+
+    def assignee_text
+      assignee ? "Assigned to: #{assignee['name']} | Id: #{assignee['_id']}" : nil
+    end
+
+    def organization_text
+      organization ? "Organization: #{organization['name']} | Id: #{organization['_id']}" : nil
     end
 
     def extra_ticket_data

@@ -31,7 +31,7 @@ class Organization
 
     def users_string
       user_names = users.map do |user|
-        '  - ' + user['name']
+        "  - #{user['name']} | Id: #{user['_id']}"
       end
 
       "Users:\n" + user_names.join("\n")
@@ -39,7 +39,7 @@ class Organization
 
     def tickets_string
       org_tickets = tickets.map do |ticket|
-        '  - ' + ticket['subject'] + ' | Status: ' + ticket['status']
+        '  - ' + ticket['subject'] + ' | Id: ' + ticket['_id']
       end
 
       "Tickets:\n" + org_tickets.join("\n")
