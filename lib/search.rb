@@ -22,7 +22,7 @@ class Search
     @organizations_path = organizations_path
 
     @resource = user_input[:resource_type]
-    @field = user_input[:data_field]
+    @field = user_input[:data_field].tr(' ', '_')
     @search_term = user_input[:search_term]
   end
 
@@ -48,7 +48,7 @@ class Search
     def check_if_data_matches_query?(data)
       case field_type
       when 'array'
-        does_an_array_include_a_serach_term?(data)
+        does_an_array_include_a_search_term?(data)
       when 'integer'
         data[field] == search_term.to_i
       when 'string'
@@ -56,7 +56,7 @@ class Search
       end
     end
 
-    def does_an_array_include_a_serach_term?(data)
+    def does_an_array_include_a_search_term?(data)
       data[field]&.map(&:downcase)&.include?(search_term)
     end
 
@@ -65,7 +65,7 @@ class Search
       when 'tags', 'domain_names'
         'array'
       when '_id'
-        resource == 'ticket' ? 'string' : 'integer'
+        resource == 'tickets' ? 'string' : 'integer'
       else
         'string'
       end
