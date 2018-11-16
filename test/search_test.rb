@@ -64,6 +64,16 @@ class SearchTests < Minitest::Test
     assert_equal 1, results.size
   end
 
+  def test_search_is_case_insensitive
+    @search.resource = 'tickets'
+    @search.field = 'subject'
+    @search.search_term = 'a catastrophe in korea (north)'
+
+    results = @search.results
+
+    assert_equal 1, results.size
+  end
+
   def test_search_for_tickets_returns_user_data
     skip
   end

@@ -52,7 +52,7 @@ class Search
       when 'integer'
         data[field] == search_term.to_i
       when 'string'
-        data[field] == search_term
+        data[field]&.downcase == search_term
       end
     end
 
