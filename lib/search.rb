@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'json'
 require 'pry'
 require 'pry-byebug'
 
@@ -42,15 +41,33 @@ class Search
 
     def results_without_associated_data
       dataset.select do |data|
-        check_if_data_matches_query(data)
+        check_if_data_matches_query?(data)
       end
     end
 
-    def check_if_data_matches_query(data)
-      if field == 'tags'
-        data['tags'].map(&:downcase).include?(search_term)
+    def check_if_data_matches_query?(data)
+      case field_type
+      when 'array'
+        does_an_array_include_a_serach_term?(data)
+      when 'integer'
+        data[field] == search_term.to_i
+      when 'string'
+        data[field] == search_term
+      end
+    end
+
+    def does_an_array_include_a_serach_term?(data)
+      data[field]&.map(&:downcase)&.include?(search_term)
+    end
+
+    def field_type
+      case field
+      when 'tags', 'domain_names'
+        'array'
+      when '_id'
+        resource == 'ticket' ? 'string' : 'integer'
       else
-        data[field.downcase] == search_term
+        'string'
       end
     end
 
@@ -121,15 +138,6 @@ class Search
     def parse_json(file_path)
       file = File.read(file_path)
       JSON.parse(file)
-    end
-
-    def index_data(data)
-      hash = {}
-      data.each do |entry|
-        id = entry['_id']
-        hash[id] = entry
-      end
-      hash
     end
 
 end

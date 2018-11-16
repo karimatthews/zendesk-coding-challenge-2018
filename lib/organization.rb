@@ -11,7 +11,8 @@ class Organization
   end
 
   def self.fields
-    %w[name details tags]
+    # All fields except time stamps
+    %w[_id url external_id name domain_names details shared_tickets tags]
   end
 
   def readable_format

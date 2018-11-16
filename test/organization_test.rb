@@ -17,9 +17,11 @@ class OrganizationTest < Minitest::Test
   end
 
   def test_fields
+    expected_fields = %w[_id url external_id name domain_names details shared_tickets tags]
+
     fields = Organization.fields
 
-    assert_equal %w[name details tags], fields
+    assert_equal expected_fields, fields
   end
 
   def test_organizations_can_be_presented_in_a_readable_format

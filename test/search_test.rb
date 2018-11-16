@@ -34,22 +34,33 @@ class SearchTests < Minitest::Test
   end
 
   def test_can_handle_empty_field
-    @search.search_term = nil
     @search.resource = 'users'
     @search.field = 'alias'
+    @search.search_term = nil
 
     results = @search.results
 
     assert_equal 'Cross Barlow', results.first['name']
   end
 
-  def test_can_search_by_tags
+  def test_tickets_can_be_searched_by_tags
     @search.field = 'tags'
     @search.search_term = 'ohio'
 
     results = @search.results
 
     assert_equal 'A Catastrophe in Korea (North)', results.first['subject']
+    assert_equal 1, results.size
+  end
+
+  def test_orgs_can_be_searched_by_domains
+    @search.resource = 'organizations'
+    @search.field = 'domain_names'
+    @search.search_term = 'zentix.com'
+
+    results = @search.results
+
+    assert_equal 'Enthaze', results.first['name']
     assert_equal 1, results.size
   end
 

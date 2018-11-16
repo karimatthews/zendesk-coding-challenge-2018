@@ -67,7 +67,8 @@ class UserInput
         "\nSelect a field from: #{readable_options}.\n\n"
       when 'search_term'
         "\nGreat. Now enter your search term. "\
-        "If you want #{@resource_type} #{@data_field} to be empty then just hit enter.\n\n"
+        "If you want #{@resource_type.chop.capitalize} #{@data_field.capitalize} "\
+        "to be empty then just hit enter.\n\n"
       end
     end
 
