@@ -14,7 +14,7 @@ class User
   def self.fields
     %w[
       _id url external_id name alias active verified shared locale
-      timezone email phone signature organization_id tags suspended role
+      timezone email phone signature tags suspended role
     ]
   end
 

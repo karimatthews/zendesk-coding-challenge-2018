@@ -20,7 +20,7 @@ class UserTest < Minitest::Test
   def test_fields
     expected_fields = %w[
       _id url external_id name alias active verified shared
-      locale timezone email phone signature organization_id tags suspended role
+      locale timezone email phone signature tags suspended role
     ]
 
     fields = User.fields

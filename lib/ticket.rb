@@ -12,7 +12,7 @@ class Ticket
   end
 
   def self.fields
-    %w[subject type description priority status _id external_id tags has_incidents via]
+    %w[_id url external_id type subject description priority status tags has_incidents via]
   end
 
   def readable_format
