@@ -37,17 +37,35 @@ class UserTest < Minitest::Test
   private
 
     def expected_user_data
-      "Francisca Rasmussen (Miss Coffey)\n"\
-      "coffeyrasmussen@flotonic.com\n"\
-      "8335-422-718\n"\
-      "Organization: Enthaze\n"\
-      "Role: admin\n"\
+      first_half_user_data + second_half_user_data
+    end
+
+    def first_half_user_data
+      "Name: Francisca Rasmussen (Miss Coffey)\n"\
+      "Signature: Don't Worry Be Happy!\n"\
+      "Contact: coffeyrasmussen@flotonic.com | 8335-422-718\n"\
+      "Organization: Enthaze\nRole: admin\n"\
+      "Id: 1\n"\
+      "Tags: Springville, Sutton, Hartsville/Hartley, Diaperville\n"\
+      "Time Zone: Sri Lanka\n"\
+      "Url: http://initech.zendesk.com/api/v2/users/1.json\n"\
+      "External Id: 74341f74-9c79-49d5-9611-87ef9b6eb75f\n"\
+      "Active: true\n"\
+      "Verified: true\n"\
+    end
+
+    def second_half_user_data
+      "Shared: false\n"\
+      "Locale: en-AU\n"\
+      "Suspended: true\n"\
+      "Created At: Friday, 15 Apr 2016  5:19 AM\n"\
+      "Last Login At: Sunday, 04 Aug 2013  1:03 AM\n"\
       "Assigned Tickets:\n"\
       "  - A Catastrophe in Korea (North) | Status: pending\n"\
       "  - A Catastrophe in Micronesia | Status: hold\n"\
       "Submitted Tickets:\n"\
       "  - A Catastrophe in Korea (North) | Status: pending\n"\
-      "  - A Catastrophe in Micronesia | Status: hold\n\n"
+      "  - A Catastrophe in Micronesia | Status: hold\n\n"\
     end
 
 end

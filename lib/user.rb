@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative 'display_results.rb'
+
 class User
 
   attr_reader :data, :organization, :submitted_tickets, :assigned_tickets
@@ -23,37 +25,72 @@ class User
   end
 
   def user_data
-    [
-      user_name_text,
-      data['email'],
-      data['phone'],
-      "Organization: #{organization['name']}",
-      "Role: #{data['role']}",
-      assigned_tickets ? assigned_tickets_string : nil,
-      submitted_tickets ? submitted_tickets_string : nil
-    ].compact
+    (basic_user_data + extra_user_data + timestamps + associated_user_data).compact
   end
 
   private
 
-    def user_name_text
+    def basic_user_data
+      [
+        "Name: #{user_name_string}",
+        "Signature: #{data['signature']}",
+        "Contact: #{data['email']} | #{data['phone']}",
+        organization_string,
+        "Role: #{data['role']}",
+        "Id: #{data['_id']}",
+        tags_string,
+        "Time Zone: #{data['timezone']}"
+      ]
+    end
+
+    def associated_user_data
+      [
+        assigned_tickets ? tickets_string(assigned_tickets, 'Assigned') : nil,
+        submitted_tickets ? tickets_string(submitted_tickets, 'Submitted') : nil
+      ]
+    end
+
+    def extra_user_data
+      [
+        "Url: #{data['url']}",
+        "External Id: #{data['external_id']}",
+        "Active: #{data['active']}",
+        "Verified: #{data['verified']}",
+        "Shared: #{data['shared']}",
+        "Locale: #{data['locale']}",
+        "Suspended: #{data['suspended']}"
+      ]
+    end
+
+    def timestamps
+      created_at_time = DisplayResults.format_time(data['created_at'])
+      last_login_at = DisplayResults.format_time(data['last_login_at'])
+
+      [
+        "Created At: #{created_at_time}",
+        "Last Login At: #{last_login_at}"
+      ]
+    end
+
+    def tags_string
+      readable_tags = data['tags'].join(', ')
+      data['tags'] ? "Tags: #{readable_tags}" : nil
+    end
+
+    def organization_string
+      organization ? "Organization: #{organization['name']}" : nil
+    end
+
+    def user_name_string
       data['alias'] ? data['name'] + ' (' + data['alias'] + ')' : data['name']
     end
 
-    def submitted_tickets_string
-      tickets = submitted_tickets.map do |ticket|
+    def tickets_string(tickets, type)
+      formatted_tickets = tickets.map do |ticket|
         '  - ' + ticket['subject'] + ' | Status: ' + ticket['status']
       end
 
-      "Submitted Tickets:\n" + tickets.join("\n")
-    end
-
-    def assigned_tickets_string
-      tickets = assigned_tickets.map do |ticket|
-        '  - ' + ticket['subject'] + ' | Status: ' + ticket['status']
-      end
-
-      "Assigned Tickets:\n" + tickets.join("\n")
+      type.capitalize + " Tickets:\n" + formatted_tickets.join("\n")
     end
 
 end
