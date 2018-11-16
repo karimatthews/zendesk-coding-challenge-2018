@@ -35,7 +35,7 @@ class UserInput
   end
 
   def receive_input(input_type, options)
-    input = gets.chomp.downcase
+    input = gets.strip.downcase
 
     if input_type == 'search_term'
       return input.empty? ? nil : input
@@ -81,7 +81,15 @@ class UserInput
     end
 
     def readable_options(options)
-      options.map(&:capitalize).join(', ')
+      options.map { |option| humanize(option) }.join(', ')
+    end
+
+    def humanize(string)
+      if string == '_id'
+        string
+      else
+        string.tr('_', ' ').capitalize
+      end
     end
 
     def field_options
