@@ -18,9 +18,14 @@ class UserTest < Minitest::Test
   end
 
   def test_fields
+    expected_fields = %w[
+      _id url external_id name alias active verified shared
+      locale timezone email phone signature organization_id tags suspended role
+    ]
+
     fields = User.fields
 
-    assert_equal %w[name alias active verified email phone signature suspended role tags], fields
+    assert_equal expected_fields, fields
   end
 
   def test_users_can_be_presented_in_a_readable_format
