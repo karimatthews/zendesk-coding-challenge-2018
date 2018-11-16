@@ -49,10 +49,8 @@ class Search
       case field_type
       when 'array'
         does_an_array_include_a_search_term?(data)
-      when 'integer'
-        data[field] == search_term.to_i
-      when 'string'
-        data[field]&.downcase == search_term
+      when 'other'
+        data[field]&.to_s&.downcase == search_term
       end
     end
 
@@ -64,10 +62,8 @@ class Search
       case field
       when 'tags', 'domain_names'
         'array'
-      when '_id'
-        resource == 'tickets' ? 'string' : 'integer'
       else
-        'string'
+        'other'
       end
     end
 

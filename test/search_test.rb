@@ -65,13 +65,22 @@ class SearchTests < Minitest::Test
   end
 
   def test_search_is_case_insensitive
-    @search.resource = 'tickets'
     @search.field = 'subject'
     @search.search_term = 'a catastrophe in korea (north)'
 
     results = @search.results
 
     assert_equal 1, results.size
+  end
+
+  def test_can_serach_on_binary_field
+    @search.resource = 'tickets'
+    @search.field = 'has_incidents'
+    @search.search_term = 'false'
+
+    results = @search.results
+
+    assert_equal 2, results.size
   end
 
   def test_search_for_tickets_returns_user_data
