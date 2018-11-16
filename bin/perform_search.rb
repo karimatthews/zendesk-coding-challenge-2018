@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require './lib/search.rb'
-require './lib/display/display_results.rb'
+require_relative '../lib/search.rb'
+require_relative '../lib/display_results.rb'
 
 tickets_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/tickets.json'
 users_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/users.json'

@@ -34,10 +34,31 @@ class TicketTest < Minitest::Test
   private
 
     def expected_ticket_data
-      "A Catastrophe in Korea (North)\n"\
+      basic_data + associated_data + extra_data
+    end
+
+    def basic_data
+      "Subject: A Catastrophe in Korea (North)\n"\
+      "Id: 436bf9b0-1147-4c0a-8439-6f79833bff5b\n"\
+      "Status: pending\n"\
+      "Priority: high\n"\
+      'Description: Nostrud ad sit velit cupidatat laboris ipsum nisi '\
+      "amet laboris ex exercitation amet et proident. Ipsum fugiat aute dolore tempor nostrud velit ipsum.\n"\
+    end
+
+    def associated_data
       "Submitted by: Francisca Rasmussen\n"\
       "Assigned to: Francisca Rasmussen\n"\
-      "Organization: Enthaze\n\n"
+      "Organization: Enthaze\n"\
+    end
+
+    def extra_data
+      "External Id: 9210cdc9-4bee-485f-a078-35396cd74063\n"\
+      "Url: http://initech.zendesk.com/api/v2/tickets/436bf9b0-1147-4c0a-8439-6f79833bff5b.json\n"\
+      "Tags: Ohio, Pennsylvania, American Samoa, Northern Mariana Islands\n"\
+      "Due at: Sunday, 31 Jul 2016  2:37 AM\n"\
+      "Has Incidents: false\n"\
+      "Via: web\n\n"
     end
 
 end

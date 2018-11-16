@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative '../ticket.rb'
-require_relative '../user.rb'
-require_relative '../organization.rb'
+require_relative 'ticket.rb'
+require_relative 'user.rb'
+require_relative 'organization.rb'
 
 class DisplayResults
 
@@ -12,6 +12,12 @@ class DisplayResults
     else
       puts formatted_results(raw_results, resource_class)
     end
+  end
+
+  def self.format_time(timestamp)
+    time = DateTime.parse(timestamp)
+    # Returns e.g. Sunday, 31 Jul 2016  2:37 AM
+    time.strftime('%A, %d %b %Y %l:%M %p')
   end
 
   private
