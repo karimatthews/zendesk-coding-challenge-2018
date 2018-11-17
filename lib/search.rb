@@ -7,6 +7,7 @@ require_relative 'ticket.rb'
 require_relative 'user.rb'
 require_relative 'organization.rb'
 require_relative 'user_input.rb'
+require_relative 'fetch_data.rb'
 
 class Search
 
@@ -14,12 +15,12 @@ class Search
   USERS = 'Users'
   ORGANIZATIONS = 'Organizations'
 
-  attr_accessor :tickets_path, :users_path, :organizations_path, :resource, :field, :search_term
+  attr_accessor :tickets, :users, :organizations, :resource, :field, :search_term
 
   def initialize(tickets_path: '', users_path: '', organizations_path: '', user_input: {})
-    @tickets_path = tickets_path
-    @users_path = users_path
-    @organizations_path = organizations_path
+    @tickets = FetchData.read_and_parse(tickets_path)
+    @users = FetchData.read_and_parse(users_path)
+    @organizations = FetchData.read_and_parse(organizations_path)
 
     @resource = user_input[:resource_type]
     @field = user_input[:data_field]
@@ -69,9 +70,9 @@ class Search
 
     def search_message
       if search_term
-        "\nSearching for #{resource.capitalize} with #{field.capitalize} \"#{search_term}\".\n\n"
+        "\nSearching for #{resource.capitalize} with #{field.capitalize} \"#{search_term}\"...\n\n"
       else
-        "\nSearching for #{resource.capitalize} with no #{field.capitalize}.\n\n"
+        "\nSearching for #{resource.capitalize} with no #{field.capitalize}...\n\n"
       end
     end
 
@@ -107,33 +108,16 @@ class Search
       organization
     end
 
+    def dataset
+      send(resource)
+    end
+
     def find_user_by_id(user_id)
       users.find { |u| u['_id'] == user_id }
     end
 
     def find_organization_by_id(org_id)
       organizations.find { |o| o['_id'] == org_id }
-    end
-
-    def tickets
-      @tickets ||= parse_json(tickets_path)
-    end
-
-    def users
-      @users ||= parse_json(users_path)
-    end
-
-    def organizations
-      @organizations ||= parse_json(organizations_path)
-    end
-
-    def dataset
-      send(resource)
-    end
-
-    def parse_json(file_path)
-      file = File.read(file_path)
-      JSON.parse(file)
     end
 
 end
