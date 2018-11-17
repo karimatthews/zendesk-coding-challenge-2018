@@ -6,7 +6,6 @@ require 'pry-byebug'
 require_relative 'ticket.rb'
 require_relative 'user.rb'
 require_relative 'organization.rb'
-require_relative 'user_input.rb'
 
 class FetchData
 

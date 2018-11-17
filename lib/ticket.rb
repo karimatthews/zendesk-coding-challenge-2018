@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'date'
-
-require_relative 'display_results.rb'
+require_relative '../lib/display.rb'
 
 class Ticket
 
@@ -73,7 +71,7 @@ class Ticket
     def due_at_string
       return if data['due_at'].nil?
 
-      formatted_time = DisplayResults.format_time(data['due_at'])
+      formatted_time = Display.format_time(data['due_at'])
       "Due at: #{formatted_time}"
     end
 

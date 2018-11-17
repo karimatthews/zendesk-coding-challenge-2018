@@ -2,10 +2,10 @@
 
 require_relative './test_helper.rb'
 
-class SearchTests < Minitest::Test
+class SearchTest < Minitest::Test
 
   def setup
-    user_input_hash = { resource_type: 'tickets', data_field: 'type', search_term: 'incident' }
+    user_input_hash = { resource: 'tickets', field: 'type', search_term: 'incident' }
 
     @search = Search.new(
       tickets_path: 'test/fixtures/json/tickets_fixture.json',

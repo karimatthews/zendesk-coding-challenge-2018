@@ -11,3 +11,8 @@ group :development do
   gem 'pry-byebug'
   gem 'rubocop', '~> 0.60.0'
 end
+
+group :test do
+  gem 'minitest-reporters'
+  gem 'o_stream_catcher'
+end

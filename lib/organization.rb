@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../lib/display.rb'
+
 class Organization
 
   attr_reader :data, :users, :tickets

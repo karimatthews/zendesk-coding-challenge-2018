@@ -6,7 +6,7 @@ require 'pry-byebug'
 require_relative 'ticket.rb'
 require_relative 'user.rb'
 require_relative 'organization.rb'
-require_relative 'user_input.rb'
+
 require_relative 'fetch_data.rb'
 
 class Search
@@ -22,17 +22,12 @@ class Search
     @users = FetchData.read_and_parse(users_path)
     @organizations = FetchData.read_and_parse(organizations_path)
 
-    @resource = user_input[:resource_type]
-    @field = user_input[:data_field]
+    @resource = user_input[:resource]
+    @field = user_input[:field]
     @search_term = user_input[:search_term]
   end
 
   def results
-    puts search_message
-    raw_results
-  end
-
-  def raw_results
     results_without_associated_data.map do |result|
       result_with_associated_data(result)
     end
@@ -65,14 +60,6 @@ class Search
         'array'
       else
         'other'
-      end
-    end
-
-    def search_message
-      if search_term
-        "\nSearching for #{resource.capitalize} with #{field.capitalize} \"#{search_term}\"...\n\n"
-      else
-        "\nSearching for #{resource.capitalize} with no #{field.capitalize}...\n\n"
       end
     end
 
@@ -109,6 +96,7 @@ class Search
     end
 
     def dataset
+      # get the dataset we are searching on
       send(resource)
     end
 

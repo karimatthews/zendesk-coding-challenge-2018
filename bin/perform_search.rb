@@ -2,24 +2,30 @@
 # frozen_string_literal: true
 
 require_relative '../lib/search.rb'
-require_relative '../lib/display_results.rb'
+require_relative '../lib/display.rb'
+require_relative '../lib/user_input.rb'
 
 tickets_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/tickets.json'
 users_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/users.json'
 organizations_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/organizations.json'
 
-puts 'Welcome to Zendesk Search.'
+display = Display.new
 
-# Will return e.g. {resource_type: 'tickets', data_field: 'type', search_term: 'incident'}
-input = UserInput.new.input_values
+display.welcome_message
+
+# Get user input
+input = UserInput.new(display)
+resource = input.resource
+field = input.field(resource)
+search_term = input.search_term(resource, field)
+
+display.search_message(resource, field, search_term)
 
 results = Search.new(
   tickets_path: tickets_path,
   users_path: users_path,
   organizations_path: organizations_path,
-  user_input: input
+  user_input: { resource: resource, field: field, search_term: search_term }
 ).results
 
-resource_class = Object.const_get(input[:resource_type].chop.capitalize)
-
-DisplayResults.new.display(results, resource_class)
+display.results(results, resource)

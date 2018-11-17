@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'display_results.rb'
+require_relative '../lib/display.rb'
 
 class User
 
@@ -63,8 +63,8 @@ class User
     end
 
     def timestamps
-      created_at_time = DisplayResults.format_time(data['created_at'])
-      last_login_at = DisplayResults.format_time(data['last_login_at'])
+      created_at_time = Display.format_time(data['created_at'])
+      last_login_at = Display.format_time(data['last_login_at'])
 
       [
         "Created At: #{created_at_time}",
