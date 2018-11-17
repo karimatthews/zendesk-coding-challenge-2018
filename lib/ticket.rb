@@ -71,8 +71,9 @@ class Ticket
     end
 
     def due_at_string
-      formatted_time = DisplayResults.format_time(data['due_at'])
+      return if data['due_at'].nil?
 
+      formatted_time = DisplayResults.format_time(data['due_at'])
       "Due at: #{formatted_time}"
     end
 
