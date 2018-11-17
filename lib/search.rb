@@ -22,7 +22,7 @@ class Search
     @organizations_path = organizations_path
 
     @resource = user_input[:resource_type]
-    @field = user_input[:data_field].tr(' ', '_')
+    @field = user_input[:data_field]
     @search_term = user_input[:search_term]
   end
 

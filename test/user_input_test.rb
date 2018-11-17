@@ -24,12 +24,33 @@ class UserInputTest < Minitest::Test
     assert_equal expected_input, input
   end
 
+  def test_user_input_is_normalised_properly
+    string_io = StringIO.new
+    string_io.puts ['Tickets', 'has incidents', 'dogs']
+
+    string_io.rewind
+    $stdin = string_io
+
+    input = @user_input.input_values
+    $stdin = STDIN
+
+    assert_equal expected_normalised_input, input
+  end
+
   private
 
     def expected_input
       {
         resource_type: 'tickets',
         data_field: 'type',
+        search_term: 'dogs'
+      }
+    end
+
+    def expected_normalised_input
+      {
+        resource_type: 'tickets',
+        data_field: 'has_incidents',
         search_term: 'dogs'
       }
     end

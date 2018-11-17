@@ -35,7 +35,7 @@ class UserInput
   end
 
   def receive_input(input_type, options)
-    input = gets.strip.downcase
+    input = gets.strip.downcase.tr(' ', '_')
 
     if input_type == 'search_term'
       return input.empty? ? nil : input
