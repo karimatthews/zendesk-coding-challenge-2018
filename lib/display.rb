@@ -8,11 +8,11 @@ class Display
   end
 
   def welcome_message
-    puts 'Welcome to Zendesk Search.'
+    puts "Welcome to Zendesk Search.\n"
   end
 
   def data_has_been_read
-    puts 'Your data has been successfully read and parsed.'
+    puts "Your data has been successfully read and parsed.\n"
   end
 
   def results(raw_results, resource_class)
@@ -29,6 +29,10 @@ class Display
     time.strftime('%A, %d %b %Y %l:%M %p')
   end
 
+  def self.data_fetching_message(file_path)
+    puts "Reading data from '#{file_path}'..."
+  end
+
   def formatted_results(raw_results, resource_type)
     resource_class = Object.const_get(resource_type.chop.capitalize)
 
@@ -39,9 +43,9 @@ class Display
 
   def search_message(resource, field, search_term)
     if search_term
-      puts "\nSearching for #{resource.capitalize} with #{field.capitalize} \"#{search_term}\"...\n\n"
+      puts "\nSearching for #{humanize(resource)} with #{humanize(field)} \"#{search_term}\"...\n\n"
     else
-      puts "\nSearching for #{resource.capitalize} with no #{field.capitalize}...\n\n"
+      puts "\nSearching for #{humanize(resource)} with no #{humanize(field)}...\n\n"
     end
   end
 
@@ -53,7 +57,7 @@ class Display
       puts "\nSelect a field from: #{readable_options(options)}.\n\n"
     when 'search_term'
       puts "\nGreat. Now enter your search term. "\
-      "If you want #{resource.capitalize} #{field.capitalize} "\
+      "If you want #{humanize(resource)} #{humanize(field)} "\
       "to be empty then just hit enter.\n\n"
     end
   end

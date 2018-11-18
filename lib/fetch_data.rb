@@ -16,6 +16,10 @@ class FetchData
   end
 
   def read_and_parse
+    # This message is only really useful when the data is large,
+    # but in those cases it's useful not to leave the user wondering what's happening
+    Display.data_fetching_message(file_path)
+
     file = read_file
     parse_json(file)
   end
@@ -23,7 +27,7 @@ class FetchData
   def read_file
     File.read(file_path)
   rescue StandardError
-    message = "Cannot find file at '#{file_path}.''"
+    message = "Cannot find file at '#{file_path}'."
     Kernel.abort(message)
   end
 
