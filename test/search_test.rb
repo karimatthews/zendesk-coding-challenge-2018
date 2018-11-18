@@ -9,9 +9,9 @@ class SearchTest < Minitest::Test
       tickets: json_fixture('test/fixtures/json/tickets_fixture.json'),
       users: json_fixture('test/fixtures/json/users_fixture.json'),
       organizations: json_fixture('test/fixtures/json/organizations_fixture.json'),
-      resource: 'tickets',
-      field: 'type',
-      search_term: 'incident'
+      resource: '',
+      field: '',
+      search_term: ''
     )
   end
 
@@ -20,12 +20,18 @@ class SearchTest < Minitest::Test
   end
 
   def test_tickets_can_be_found_by_type
+    @search.resource = 'tickets'
+    @search.field = 'type'
+    @search.search_term = 'incident'
+
     results = @search.results
 
     assert_equal 2, results.size
   end
 
   def test_no_results_are_returned_when_search_term_does_not_match
+    @search.resource = 'tickets'
+    @search.field = 'type'
     @search.search_term = 'nonsense'
 
     results = @search.results
@@ -44,6 +50,7 @@ class SearchTest < Minitest::Test
   end
 
   def test_tickets_can_be_searched_by_tags
+    @search.resource = 'tickets'
     @search.field = 'tags'
     @search.search_term = 'ohio'
 
@@ -65,6 +72,7 @@ class SearchTest < Minitest::Test
   end
 
   def test_search_is_case_insensitive
+    @search.resource = 'tickets'
     @search.field = 'subject'
     @search.search_term = 'a catastrophe in korea (north)'
 
@@ -83,12 +91,50 @@ class SearchTest < Minitest::Test
     assert_equal 2, results.size
   end
 
-  def test_search_for_tickets_returns_user_data
-    skip
+  def test_search_for_tickets_returns_associated_data
+    @search.resource = 'tickets'
+    @search.field = 'type'
+    @search.search_term = 'incident'
+
+    results = @search.results
+
+    assert_equal 1, results.first.dig('submitter', '_id')
+    assert_equal 1, results.first.dig('assignee', '_id')
+    assert_equal 101, results.first.dig('organization', '_id')
   end
 
-  def test_search_for_tickets_returns_org_data
-    skip
+  def test_search_for_users_return_associated_data
+    @search.resource = 'users'
+    @search.field = 'role'
+    @search.search_term = 'admin'
+
+    results = @search.results
+
+    assert_equal '436bf9b0-1147-4c0a-8439-6f79833bff5b', results.first['assigned_tickets'].first['_id']
+    assert_equal 1, results.first['submitted_tickets'].size
+    assert_equal 101, results.first.dig('organization', '_id')
+  end
+
+  def test_search_for_organizations_returns_user_data
+    @search.resource = 'organizations'
+    @search.field = 'tags'
+    @search.search_term = 'fulton'
+
+    results = @search.results
+
+    assert_equal 1, results.first['users'].first['_id']
+    assert_equal 2, results.first['users'].size
+  end
+
+  def test_search_for_organizations_returns_ticket_data
+    @search.resource = 'organizations'
+    @search.field = 'tags'
+    @search.search_term = 'fulton'
+
+    results = @search.results
+
+    assert_equal '436bf9b0-1147-4c0a-8439-6f79833bff5b', results.first['tickets'].first['_id']
+    assert_equal 2, results.first['tickets'].size
   end
 
 end
