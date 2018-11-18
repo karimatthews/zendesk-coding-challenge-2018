@@ -21,3 +21,6 @@ Style/EmptyMethod:
 
 Style/DateTime:
   Enabled: false
+
+Metrics/ParameterLists:
+  Max: 6

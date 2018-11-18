@@ -7,8 +7,6 @@ require_relative 'resources/ticket.rb'
 require_relative 'resources/user.rb'
 require_relative 'resources/organization.rb'
 
-require_relative 'fetch_data.rb'
-
 class Search
 
   TICKETS = 'Tickets'
@@ -17,14 +15,14 @@ class Search
 
   attr_accessor :tickets, :users, :organizations, :resource, :field, :search_term
 
-  def initialize(tickets_path: '', users_path: '', organizations_path: '', user_input: {})
-    @tickets = FetchData.read_and_parse(tickets_path)
-    @users = FetchData.read_and_parse(users_path)
-    @organizations = FetchData.read_and_parse(organizations_path)
+  def initialize(tickets:, users:, organizations:, resource:, field:, search_term:)
+    @tickets = tickets
+    @users = users
+    @organizations = organizations
 
-    @resource = user_input[:resource]
-    @field = user_input[:field]
-    @search_term = user_input[:search_term]
+    @resource = resource
+    @field = field
+    @search_term = search_term
   end
 
   def results

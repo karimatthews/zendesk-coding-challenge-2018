@@ -11,6 +11,10 @@ class Display
     puts 'Welcome to Zendesk Search.'
   end
 
+  def data_has_been_read
+    puts 'Your data has been successfully read and parsed.'
+  end
+
   def results(raw_results, resource_class)
     if raw_results.empty?
       puts 'Sorry, your search has returned no results.'

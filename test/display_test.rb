@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'o_stream_catcher'
-
 require_relative './test_helper.rb'
 
 class DisplayTest < Minitest::Test
