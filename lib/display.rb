@@ -8,11 +8,12 @@ class Display
   end
 
   def welcome_message
-    puts "Welcome to Zendesk Search.\n"
+    puts "Welcome to this CLI Search tool. Please wait one moment while your data is read.\n"\
+    "If you would like to use different data you can change the paths in 'lib/perform_search.rb'\n\n"
   end
 
   def data_has_been_read
-    puts "Your data has been successfully read and parsed.\n"
+    puts "\nYour data has been successfully read and parsed.\n"
   end
 
   def results(raw_results, resource_class)
