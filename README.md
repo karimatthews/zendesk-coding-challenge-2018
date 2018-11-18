@@ -9,7 +9,7 @@ After cloning the repo you can run `bundle install` to install dependencies. You
 From your project directory run
 
 ```
-ruby 'bin/perform_search.rb'
+ruby 'bin/search_cli.rb'
 ```
 
 and follow the prompts.
@@ -25,5 +25,6 @@ To run the test suite you can run this line from the project directory:
 ## Assumptions
 - It's unlikely Zendesk is giving out sensitive customer data to candidates, so the `data` folder has been committed.
 - We can rely on the user to specify the type of resource and the specific field they're looking for.
-- We don't need to return all the data of the associated resources, just enough to get a feel for what we're looking at.
+- We don't need to return all the data of the associated resources, just a name/subject and ID so that the user can easily find more information if they need it.
+- The user may or may not be technical
 

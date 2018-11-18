@@ -4,9 +4,7 @@ require 'pry'
 require 'minitest/autorun'
 require 'stringio'
 
-require_relative '../lib/search.rb'
-require_relative '../lib/user_input.rb'
-require_relative '../lib/fetch_data.rb'
+require_relative '../lib/perform_search.rb'
 
 require 'minitest/reporters'
 
