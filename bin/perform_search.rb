@@ -5,9 +5,9 @@ require_relative '../lib/search.rb'
 require_relative '../lib/display.rb'
 require_relative '../lib/user_input.rb'
 
-tickets_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/tickets.json'
-users_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/users.json'
-organizations_path = '/Users/kari/Projects/zendesk-coding-challenge-2018/data/organizations.json'
+tickets_path = 'data/tickets.json'
+users_path = 'data/users.json'
+organizations_path = 'data/organizations.json'
 
 display = Display.new
 
