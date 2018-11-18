@@ -33,13 +33,26 @@ class OrganizationTest < Minitest::Test
   private
 
     def expected_organization_data
-      "Enthaze\n"\
+      basic_data + extra_data
+    end
+
+    def basic_data
+      "Name: Enthaze\n"\
+      "Id: 101\n"\
+      "Details: MegaCorp\n"\
+      "Created at: Saturday, 21 May 2016 11:10 AM\n"\
+      "Domain Names: kage.com, ecratic.com, endipin.com, zentix.com\n"\
+      "Shared Tickets: false\n"\
+    end
+
+    def extra_data
+      "Tags: Fulton, West, Rodriguez, Farley\n"\
       "Users:\n"\
       "  - Francisca Rasmussen | Id: 1\n"\
       "  - Cross Barlow | Id: 2\n"\
       "Tickets:\n"\
       "  - A Catastrophe in Korea (North) | Id: 436bf9b0-1147-4c0a-8439-6f79833bff5b\n"\
-      "  - A Catastrophe in Micronesia | Id: 1a227508-9f39-427c-8f57-1b72f3fab87c\n\n"
+      "  - A Catastrophe in Micronesia | Id: 1a227508-9f39-427c-8f57-1b72f3fab87c\n\n"\
     end
 
 end
