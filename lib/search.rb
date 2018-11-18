@@ -42,25 +42,15 @@ class Search
     end
 
     def check_if_data_matches_query?(data)
-      case field_type
-      when 'array'
+      if data[field].class == Array
         does_an_array_include_a_search_term?(data)
-      when 'other'
+      else
         data[field]&.to_s&.downcase == search_term
       end
     end
 
     def does_an_array_include_a_search_term?(data)
       data[field]&.map(&:downcase)&.include?(search_term)
-    end
-
-    def field_type
-      case field
-      when 'tags', 'domain_names'
-        'array'
-      else
-        'other'
-      end
     end
 
     def result_with_associated_data(result)
