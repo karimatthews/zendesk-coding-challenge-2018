@@ -3,9 +3,9 @@
 require 'pry'
 require 'pry-byebug'
 
-require_relative 'ticket.rb'
-require_relative 'user.rb'
-require_relative 'organization.rb'
+require_relative 'resources/ticket.rb'
+require_relative 'resources/user.rb'
+require_relative 'resources/organization.rb'
 
 class FetchData
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../lib/display.rb'
+require_relative '../display.rb'
 
 class Ticket
 
